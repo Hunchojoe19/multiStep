@@ -13,3 +13,17 @@
   color: rgb(153, 148, 148);
   font-weight: 400;
 }
+#bg-desktop {
+  background-image: url("./assets/bg/bg-sidebar-desktop.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+#arcade:focus {
+  /* border: 2px solid rgb(160, 73, 241); */
+  outline: 2px solid rgb(160, 73, 241);
+}
+#arcade {
+  border: 1px solid rgb(160, 73, 241);
+  /* outline: 2px solid rgb(160, 73, 241); */
+}
