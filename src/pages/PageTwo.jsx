@@ -76,16 +76,22 @@ const plans = [
         id: 1,
         name: "Arcade",
         price: 90,
+        free: "2 months free",
+        image: `${image1}`,
       },
       {
         id: 2,
         name: "Advanced",
         price: 120,
+        free: "2 months free",
+        image: `${image2}`,
       },
       {
         id: 3,
         name: "Pro",
         price: 150,
+        free: "2 months free",
+        image: `${image3}`,
       },
     ],
   },
@@ -94,6 +100,7 @@ const PageTwo = () => {
   const [isActive, setIsActive] = useState(false);
   const [plan, setPlan] = useState([]);
   const [focusedIndex, setFocusedIndex] = useState(null);
+  const [checked, setChecked] = useState(false);
 
   // console.log(plan);
 
@@ -103,10 +110,11 @@ const PageTwo = () => {
     setIsActive(true);
   };
 
-  const handleSwitch = (i) => {
-    if (i === 1) {
+  const handleSwitch = () => {
+    setChecked((prev) => !prev);
+    if (checked) {
       setPlan(plans[0].monthly);
-    } else if (i === 2) {
+    } else {
       setPlan(plans[0].yearly);
     }
   };
@@ -119,7 +127,7 @@ const PageTwo = () => {
       <div>
         <div className="relative w-full h-[530px] flex justify-center items-center bg-blue-100 md:bg-white md:h-full">
           <div className="container mx-auto p-4 flex flex-col justify-center items-center md:hidden">
-            <div className="absolute -top-20 bg-white w-[360px] h-[580px] border rounded-lg">
+            <div className="absolute -top-20 bg-white shadow-lg w-[360px] h-[580px] border rounded-lg">
               <div className="flex flex-col items-start h-full p-8">
                 <h2 className="text-2xl text-blue-900" id="info">
                   Select your Plan
@@ -130,7 +138,7 @@ const PageTwo = () => {
                 {plan.map((item, i) => (
                   <div
                     key={item.id}
-                    className={`mt-4 flex items-center justify-start p-4 rounded-lg w-[300px] h-[80px] gap-3 ${
+                    className={`mt-4 flex items-center justify-start p-4 rounded-lg w-[300px] h-[100px] gap-3 ${
                       focusedIndex === item.id && isActive
                         ? "border border-purple-600 bg-blue-50"
                         : "border border-zinc-300"
@@ -153,17 +161,34 @@ const PageTwo = () => {
                         <span className="text-sm text-zinc-400">/</span>
                         <span className="text-sm text-zinc-400">month</span>
                       </p>
+                      <p className="font-ubuntu text-blue-900 font-bold">
+                        {item?.free}
+                      </p>
                     </div>
                   </div>
                 ))}
                 <div className="flex justify-center items-center mt-8 bg-blue-50 p-4 w-[300px] rounded-lg">
                   <Stack direction="row" spacing={1} alignItems="center">
-                    <Typography>Monthly</Typography>
+                    <p
+                      className={`font-ubuntu font-bold ${
+                        !checked && isActive ? "text-blue-900" : "text-zinc-300"
+                      } `}
+                    >
+                      Monthly
+                    </p>
                     <AntSwitch
-                      defaultChecked
+                      onChange={handleSwitch}
+                      disabled={focusedIndex === null}
+                      checked={checked}
                       inputProps={{ "aria-label": "ant design" }}
                     />
-                    <Typography>Yearly</Typography>
+                    <p
+                      className={`font-ubuntu font-bold ${
+                        checked && isActive ? "text-blue-900" : "text-zinc-300"
+                      } `}
+                    >
+                      Yearly
+                    </p>
                   </Stack>
                 </div>
               </div>
@@ -172,84 +197,73 @@ const PageTwo = () => {
           <div className="hidden md:flex w-full h-full flex-col items-center">
             <div className="p-6 mt-8">
               <h2 className="text-2xl text-blue-900" id="info">
-                Personal info
+                Select your Plan
               </h2>
               <p className="font-ubuntu mt-2" id="text">
-                Please Provide your name, email address, and phone number.
+                You have the option of monthly or yearly billing.
               </p>
-              <div className="w-[400px] lg:w-[450px] lg:mt-3">
-                <TextField
-                  sx={{ width: "100%" }}
-                  label="Full Name"
-                  name="fullName"
-                  variant="outlined"
-                  placeholder="Full Name"
-                  margin="normal"
-                  color="primary"
-                  required
-                  //   error={!validName && nameFocus}
-                  //   inputRef={userRef}
-                  autoFocus={true}
-                  //   onFocus={() => setNameFocus(true)}
-                  //   onBlur={() => setNameFocus(false)}
-                  //   value={userDetails.name}
-                  helperText={"Please enter your full name"}
-                  // onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })"}
-                  //   onChange={(e) =>
-                  // dispatch(
-                  //   setUserDetails({ ...userDetails, name: e.target.value })
-                  // )
-                  //   }
-                />
+              <div className="mt-3 flex justify-start items-center gap-2 lg:gap-3">
+                {plan.map((item) => (
+                  <div
+                    key={item.id}
+                    className={`mt-4 flex flex-col cursor-pointer items-start gap-12 justify-start p-4 rounded-lg w-[130px] lg:w-[160px] h-[200px] ${
+                      focusedIndex === item.id && isActive
+                        ? "border border-purple-600 bg-blue-50"
+                        : "border border-zinc-300"
+                    }`}
+                    onClick={() => handleFocus(item.id)}
+                  >
+                    <div className="mt-2 w-contain h-[40px] rounded-lg flex justify-start">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full h-full flex justify-start"
+                      />
+                    </div>
+                    <div className="flex flex-col items-start justify-center">
+                      <h2 className="text-xl font-bold text-blue-900">
+                        {item.name}
+                      </h2>
+                      <p className="font-ubuntu text-zinc-400">
+                        ${item.price}
+                        <span className="text-sm text-zinc-400">/</span>
+                        <span className="text-sm text-zinc-400">month</span>
+                      </p>
+                      <p className="font-ubuntu text-blue-900 font-bold">
+                        {item?.free}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div className="w-[400px] lg:w-[450px] lg:mt-3">
-                <TextField
-                  sx={{ width: "100%" }}
-                  label="Email Address"
-                  name="email"
-                  variant="outlined"
-                  placeholder="Email Address"
-                  margin="normal"
-                  color="primary"
-                  type="email"
-                  // error={!validMail && userFocus}
-                  // inputRef={userRef}
-                  // onFocus={() => setUserFocus(true)}
-                  // onBlur={() => setUserFocus(false)}
-                  helperText={"Please enter a valid email address"}
-                  required
-                  // value={userDetails.email}
-                  // onChange={(e) =>
-                  // dispatch(
-                  // setUserDetails({ ...userDetails, email: e.target.value })
-                  // )
-                  // }
-                />
+              <div className="flex justify-center items-center mt-8 bg-blue-50 p-4 w-[400px] rounded-lg lg:w-[504px]">
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <p
+                    className={`font-ubuntu font-bold ${
+                      !checked && isActive ? "text-blue-900" : "text-zinc-300"
+                    } `}
+                  >
+                    Monthly
+                  </p>
+                  <AntSwitch
+                    onChange={handleSwitch}
+                    disabled={focusedIndex === null}
+                    checked={checked}
+                    inputProps={{ "aria-label": "ant design" }}
+                  />
+                  <p
+                    className={`font-ubuntu font-bold ${
+                      checked && isActive ? "text-blue-900" : "text-zinc-300"
+                    } `}
+                  >
+                    Yearly
+                  </p>
+                </Stack>
               </div>
-              <div className="w-[400px] lg:w-[450px] lg:mt-3">
-                <TextField
-                  sx={{ width: "100%" }}
-                  label="Phone number"
-                  name="phone"
-                  variant="outlined"
-                  type="tel"
-                  // error={!validPhone && phoneFocus}
-                  // onFocus={() => setPhoneFocus(true)}
-                  // onBlur={() => setPhoneFocus(false)}
-                  helperText={"Please enter a valid phone number"}
-                  required
-                  placeholder="+1 234 567 890"
-                  margin="normal"
-                  color="primary"
-                  // value={userDetails.phone}
-                  // onChange={(e) =>
-                  // dispatch(
-                  // setUserDetails({ ...userDetails, phone: e.target.value })
-                  // )
-                  // }
-                />
-              </div>
-              <div className="hidden md:flex justify-end items-center py-6">
+              <div className="hidden md:flex mt-6 justify-between items-center py-6">
+                <button className="text-zinc-400 font-ubuntu font-semibold cursor-pointer w-[120px] h-12 bg-zinc-50 rounded-lg">
+                  Go Back
+                </button>
                 <button className="bg-blue-900 text-white font-ubuntu w-[120px] h-12 flex justify-center items-center rounded-lg cursor-pointer">
                   Next Step
                 </button>

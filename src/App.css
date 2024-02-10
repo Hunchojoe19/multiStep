@@ -27,3 +27,9 @@
   border: 1px solid rgb(160, 73, 241);
   /* outline: 2px solid rgb(160, 73, 241); */
 }
+#price {
+  font-size: 12px;
+}
+#description {
+  font-size: 12px;
+}

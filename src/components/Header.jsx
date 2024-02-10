@@ -5,6 +5,7 @@ import PageOne from "./../pages/PageOne";
 import PageTwo from "../pages/PageTwo";
 import PageThree from "../pages/PageThree";
 import PageFour from "../pages/PageFour";
+import Summary from "../pages/Summary";
 
 const handleStep = (step) => {
   switch (step) {
@@ -16,6 +17,8 @@ const handleStep = (step) => {
       return <PageThree />;
     case 4:
       return <PageFour />;
+    case 5:
+      return <Summary />;
     default:
       return <PageOne />;
   }
@@ -27,7 +30,7 @@ const Header = () => {
   return (
     <div className="w-full h-full">
       <div
-        className="relative w-full h-48 bg-blue-500 bg-opacity-50 md:hidden"
+        className="relative w-full h-48 bg-opacity-50 md:hidden"
         id="bg-header"
       >
         <div className="w-56 absolute top-6 left-20">

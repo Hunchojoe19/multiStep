@@ -7,7 +7,7 @@ const MainForm = () => {
     <div>
       <div className="relative w-full h-[550px] flex justify-center items-center bg-blue-100 md:bg-white md:h-full">
         <div className="container mx-auto p-4 flex flex-col justify-center items-center md:hidden">
-          <div className="absolute -top-20 bg-white w-[360px] h-[480px] border rounded-lg">
+          <div className="absolute -top-20 bg-white shadow-lg w-[360px] h-[480px] border rounded-lg">
             <div className="flex flex-col items-start h-full p-8">
               <h2 className="text-2xl text-blue-900" id="info">
                 Personal info
@@ -172,7 +172,10 @@ const MainForm = () => {
               />
             </div>
             <div className="hidden md:flex justify-end items-center py-6">
-              <button className="bg-blue-900 text-white font-ubuntu w-[120px] h-12 flex justify-center items-center rounded-lg cursor-pointer">
+              <button
+                className="bg-blue-900 text-white font-ubuntu w-[120px] h-12 flex justify-center items-center rounded-lg cursor-pointer"
+                // onClick={() => setStep(step + 1)}
+              >
                 Next Step
               </button>
             </div>
@@ -180,7 +183,10 @@ const MainForm = () => {
         </div>
       </div>
       <div className="flex justify-end items-center p-4 md:hidden">
-        <button className="bg-blue-900 text-white font-ubuntu w-[120px] h-12 flex justify-center items-center rounded-lg cursor-pointer">
+        <button
+          className="bg-blue-900 text-white font-ubuntu w-[120px] h-12 flex justify-center items-center rounded-lg cursor-pointer"
+          // onClick={() => setStep(step + 1)}
+        >
           Next Step
         </button>
       </div>
