@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrent } from "../redux/slices/inputSlice";
 
 const number = [1, 2, 3, 4];
 const label = ["YOUR INFO", "SELECT PLAN", "ADD-ONS", "SUMMARY"];
 
-const Stepper = ({ active, setActive, step, setStep }) => {
-  console.log(step);
+const Stepper = ({ active, setActive }) => {
+  const { current } = useSelector((state) => state.input);
+  const dispatch = useDispatch();
+
   const handleClick = (i) => {
-    setStep(i);
+    dispatch(setCurrent(i));
     setActive(true);
   };
 
   useEffect(() => {
-    setStep(0);
+    dispatch(setCurrent(0));
     setActive(true);
   }, []);
 
@@ -22,13 +26,13 @@ const Stepper = ({ active, setActive, step, setStep }) => {
           <div
             key={index}
             className={`h-8 w-8 border rounded-full flex items-center justify-center ${
-              step === index && active ? "bg-blue-200" : "bg-transparent"
+              current === index && active ? "bg-blue-200" : "bg-transparent"
             }`}
             onClick={() => handleClick(index)}
           >
             <h1
               className={`${
-                step === index && active ? "text-black" : "text-white"
+                current === index && active ? "text-black" : "text-white"
               } text-center font-bold`}
             >
               {item}
@@ -42,13 +46,13 @@ const Stepper = ({ active, setActive, step, setStep }) => {
             <div key={index} className="flex gap-5">
               <div
                 className={`h-12 w-12 border rounded-full cursor-pointer flex items-center justify-center ${
-                  step === index && active ? "bg-blue-200" : "bg-transparent"
+                  current === index && active ? "bg-blue-200" : "bg-transparent"
                 }`}
                 onClick={() => handleClick(index)}
               >
                 <h1
                   className={`${
-                    step === index && active ? "text-black" : "text-white"
+                    current === index && active ? "text-black" : "text-white"
                   } text-center font-bold`}
                 >
                   {item}

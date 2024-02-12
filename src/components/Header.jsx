@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import Stepper from "./../pages/Stepper";
-import MainForm from "../pages/MainForm";
+
 import PageOne from "./../pages/PageOne";
 import PageTwo from "../pages/PageTwo";
 import PageThree from "../pages/PageThree";
 import PageFour from "../pages/PageFour";
 import Summary from "../pages/Summary";
+import { useSelector } from "react-redux";
 
 const handleStep = (step) => {
   switch (step) {
@@ -25,8 +26,10 @@ const handleStep = (step) => {
 };
 const number = [1, 2, 3, 4];
 const Header = () => {
+  const { steps } = useSelector((state) => state.input);
+  const { current } = useSelector((state) => state.input);
   const [active, setActive] = useState(false);
-  const [step, setStep] = useState(number[0]);
+
   return (
     <div className="w-full h-full">
       <div
@@ -34,12 +37,7 @@ const Header = () => {
         id="bg-header"
       >
         <div className="w-56 absolute top-6 left-20">
-          <Stepper
-            active={active}
-            setActive={setActive}
-            step={step}
-            setStep={setStep}
-          />
+          <Stepper active={active} setActive={setActive} />
         </div>
       </div>
       <div className="hidden md:flex relative w-full h-[550px] flex justify-center items-center bg-blue-100 md:h-[100vh]">
@@ -49,19 +47,14 @@ const Header = () => {
               className="bg-blue-500 w-[200px] rounded-lg h-[570px] lg:w-[300px]"
               id="bg-desktop"
             >
-              <Stepper
-                step={step}
-                setStep={setStep}
-                setActive={setActive}
-                active={active}
-              />
+              <Stepper setActive={setActive} active={active} />
             </div>
-            <div className="hidden md:flex">{handleStep(step + 1)}</div>
+            <div className="hidden md:flex">{handleStep(current + 1)}</div>
           </div>
         </div>
       </div>
 
-      <div className="md:hidden">{handleStep(step + 1)}</div>
+      <div className="md:hidden">{handleStep(current + 1)}</div>
       {/* <div className="hidden md:flex">{handleStep(step + 1)}</div> */}
     </div>
   );
