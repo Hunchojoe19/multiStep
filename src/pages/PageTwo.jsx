@@ -1,14 +1,9 @@
-import { Stack, Switch, TextField, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import image1 from "../assets/bg/icon-arcade.svg";
-import image2 from "../assets/bg/icon-advanced.svg";
-import image3 from "../assets/bg/icon-pro.svg";
+import { Stack, Switch } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import {
   setCurrent,
   setFocusedIndex,
   setSelectedTypes,
-  setSelectedPlan,
   setTotal,
 } from "../redux/slices/inputSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -57,72 +52,12 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-// const plans = [
-// {
-// monthly: [
-// {
-// id: 1,
-// name: "Arcade",
-// price: 9,
-// image: `${image1}`,
-// },
-// {
-// id: 2,
-// name: "Advanced",
-// price: 12,
-// image: `${image2}`,
-// },
-// {
-// id: 3,
-// name: "Pro",
-// price: 15,
-// image: `${image3}`,
-// },
-// ],
-// yearly: [
-// {
-// id: 1,
-// name: "Arcade",
-// price: 90,
-// free: "2 months free",
-// image: `${image1}`,
-// },
-// {
-// id: 2,
-// name: "Advanced",
-// price: 120,
-// free: "2 months free",
-// image: `${image2}`,
-// },
-// {
-// id: 3,
-// name: "Pro",
-// price: 150,
-// free: "2 months free",
-// image: `${image3}`,
-// },
-// ],
-// },
-// ];
 const PageTwo = () => {
-  const [isActive, setIsActive] = useState(false);
-  const [plan, setPlan] = useState([]);
-  // const [focusedIndex, setFocusedIndex] = useState(null);
-  // const [checked, setChecked] = useState(false);
-
   const dispatch = useDispatch();
 
-  const { focusedIndex, selectedPlan, selectedTypes, total } = useSelector(
+  const { focusedIndex, selectedPlan, selectedTypes } = useSelector(
     (state) => state.input
   );
-
-  console.log("selected types ", selectedTypes.switchState);
-  console.log("selected plan ", selectedPlan);
-  console.log("total ", total);
-
-  // useEffect(() => {
-  // handleFocus(focusedIndex);
-  // }, [focusedIndex]);
 
   const handleFocus = (i) => {
     dispatch(setFocusedIndex(i));
@@ -134,7 +69,6 @@ const PageTwo = () => {
     dispatch(setFocusedIndex(1));
   };
 
-  useEffect(() => {}, []);
   return (
     <div>
       <div>
@@ -224,7 +158,7 @@ const PageTwo = () => {
                   <div
                     key={item.id}
                     className={`mt-4 flex flex-col cursor-pointer items-start gap-12 justify-start p-4 rounded-lg w-[130px] lg:w-[160px] h-[200px] ${
-                      focusedIndex === item.id && isActive
+                      focusedIndex === item.id
                         ? "border border-purple-600 bg-blue-50"
                         : "border border-zinc-300"
                     }`}
@@ -257,7 +191,7 @@ const PageTwo = () => {
                 <Stack direction="row" spacing={1} alignItems="center">
                   <p
                     className={`font-ubuntu font-bold ${
-                      !selectedTypes && isActive
+                      !selectedTypes.switchState
                         ? "text-blue-900"
                         : "text-zinc-300"
                     } `}
@@ -267,12 +201,12 @@ const PageTwo = () => {
                   <AntSwitch
                     onChange={handleSwitch}
                     disabled={focusedIndex === null}
-                    checked={selectedTypes}
+                    checked={selectedTypes.switchState}
                     inputProps={{ "aria-label": "ant design" }}
                   />
                   <p
                     className={`font-ubuntu font-bold ${
-                      selectedTypes && isActive
+                      selectedTypes.switchState
                         ? "text-blue-900"
                         : "text-zinc-300"
                     } `}
@@ -288,7 +222,10 @@ const PageTwo = () => {
                 >
                   Go Back
                 </button>
-                <button className="bg-blue-900 text-white font-ubuntu w-[120px] h-12 flex justify-center items-center rounded-lg cursor-pointer">
+                <button
+                  className="bg-blue-900 text-white font-ubuntu w-[120px] h-12 flex justify-center items-center rounded-lg cursor-pointer"
+                  onClick={() => dispatch(setCurrent(2))}
+                >
                   Next Step
                 </button>
               </div>
@@ -296,10 +233,16 @@ const PageTwo = () => {
           </div>
         </div>
         <div className="flex justify-between items-center p-4 md:hidden">
-          <button className="text-zinc-400 font-ubuntu font-semibold cursor-pointer w-[120px] h-12 bg-zinc-50 rounded-lg">
+          <button
+            className="text-zinc-400 font-ubuntu font-semibold cursor-pointer w-[120px] h-12 bg-zinc-50 rounded-lg "
+            onClick={() => dispatch(setCurrent(0))}
+          >
             Go Back
           </button>
-          <button className="bg-blue-900 text-white font-ubuntu w-[120px] h-12 flex justify-center items-center rounded-lg cursor-pointer">
+          <button
+            className="bg-blue-900 text-white font-ubuntu w-[120px] h-12 flex justify-center items-center rounded-lg cursor-pointer"
+            onClick={() => dispatch(setCurrent(2))}
+          >
             Next Step
           </button>
         </div>

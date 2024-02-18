@@ -22,7 +22,7 @@ const Summary = () => {
             </div>
           </div>
         </div>
-        <div className="hidden md:flex w-full h-full flex-col items-center">
+        <div className="hidden md:flex w-[530px] h-full flex-col items-center">
           <div className="p-6 mt-8">
             <div className="mx-auto flex justify-center items-center mt-10">
               <img src={thanks} alt="thank you" className="h-24 mt-12" />
@@ -30,7 +30,7 @@ const Summary = () => {
             <p className="font-ubuntu mt-6 flex justify-center w-full text-center text-3xl text-blue-900 font-bold">
               Thank you!
             </p>
-            <p className="font-ubuntu text-zinc-400 mt-2 text-center">
+            <p className="font-ubuntu text-zinc-400 mt-2 text-lg text-center">
               Thanks for confirming your subscription! We hope you have fun
               using our platform. If you ever need support, please feel free to
               email us at hunchojoe@gmail.com

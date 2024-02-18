@@ -1,6 +1,13 @@
 import { Checkbox, MenuItem } from "@mui/material";
 import { withStyles } from "@mui/styles";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setCurrent,
+  setSelectedAddOns,
+  setPrice,
+  setHandleCheck,
+} from "../redux/slices/inputSlice";
 
 const GreenCheckbox = withStyles({
   root: {
@@ -11,30 +18,79 @@ const GreenCheckbox = withStyles({
   },
   checked: {},
 })((props) => <Checkbox color="default" {...props} />);
-const menuItems = [
+const menuI = [
   {
+    selected: false,
     label: "Online service",
     description: "Access to multiplayer games",
-    price: "+$1/mo",
+    price: 1,
   },
   {
+    selected: false,
     label: "Larger storage",
     description: "Extra 1TB of cloud save",
-    price: "+$2/mo",
+    price: 2,
   },
   {
+    selected: false,
     label: "Customizable profile",
     description: "Custom theme on your profile",
-    price: "+$2/mo",
+    price: 2,
   },
 ];
 const PageThree = () => {
+  const { selectedTypes, menuItems } = useSelector((state) => state.input);
   const [isChecked, setIsChecked] = useState(menuItems.slice().fill(false));
 
-  const [value, setValue] = useState();
+  useEffect((e) => {
+    handleChecked(e);
+  }, []);
+  const dispatch = useDispatch();
+
+  const findTrue = () => {
+    const trueValues = isChecked
+      .map((v, i) => v && i)
+      .filter((v) => v || v === 0)
+      .map((i) => {
+        return dispatch(setSelectedAddOns(menuItems[i]));
+      });
+
+    dispatch(setCurrent(3));
+  };
+
   const handleChecked = (index) => {
     setIsChecked(isChecked.map((v, i) => (i === index ? !v : v)));
   };
+
+  const tots = menuItems.map((item) => {
+    let price = 0;
+    if (item.selected === true) {
+      price += item.price;
+    }
+    return price;
+  });
+
+  const handleNewCheck = (e) => {
+    dispatch(setHandleCheck(e));
+  };
+
+  const handleNext = () => {
+    dispatch(setSelectedAddOns(menuItems));
+    if (selectedTypes.switchState === false) {
+      dispatch(setPrice(tots.reduce((a, b) => b + a)));
+      dispatch(setCurrent(3));
+    } else if (selectedTypes.switchState === true) {
+      let totalValue = tots.reduce((a, b) => a + b);
+
+      dispatch(setPrice(totalValue * 10));
+      dispatch(setCurrent(3));
+    }
+  };
+
+  const handleBack = () => {
+    dispatch(setCurrent(1));
+  };
+
   return (
     <div>
       <div>
@@ -53,19 +109,19 @@ const PageThree = () => {
                     <div
                       key={index}
                       className={`w-[300px] h-[70px] border rounded-lg flex justify-start items-center ${
-                        isChecked[index]
+                        item.selected
                           ? "bg-blue-50 border-purple-600"
                           : "bg-white"
                       }`}
                     >
                       <MenuItem
-                        value={item.price}
-                        selected={item.price === value}
+                        value={item.name}
+                        // selected={item.price === value}
                       >
                         <GreenCheckbox
                           key={index}
-                          checked={isChecked[index]}
-                          onClick={() => handleChecked(index)}
+                          checked={item.selected}
+                          onClick={() => handleNewCheck(item)}
                         ></GreenCheckbox>
                         <div className="w-[155px] flex flex-col justify-center items-start">
                           <p className="font-ubuntu text-blue-900 font-bold">
@@ -76,9 +132,15 @@ const PageThree = () => {
                           </p>
                         </div>
                         <div className="ml-7 flex">
-                          <p className="text-sm text-blue-700" id="price">
-                            {item.price}
-                          </p>
+                          {selectedTypes.switchState === false ? (
+                            <p className="text-sm text-blue-700" id="price">
+                              +${item.price}/mo
+                            </p>
+                          ) : (
+                            <p className="text-sm text-blue-700" id="price">
+                              +${item.price * 10}/yr
+                            </p>
+                          )}
                         </div>
                       </MenuItem>
                     </div>
@@ -100,7 +162,7 @@ const PageThree = () => {
                   <div
                     key={index}
                     className={`w-[400px] h-[70px] border rounded-lg flex justify-start items-center ${
-                      isChecked[index]
+                      item.selected
                         ? "bg-blue-50 border-purple-600"
                         : "bg-white"
                     }`}
@@ -110,14 +172,16 @@ const PageThree = () => {
                         width: "100%",
                         height: "100%",
                       }}
-                      value={item.price}
-                      selected={item.price === value}
+                      value={item.name}
+
+                      // value={item.price}
+                      // selected={item.price === value}
                     >
-                      <Checkbox
+                      <GreenCheckbox
                         key={index}
-                        checked={isChecked[index]}
-                        onClick={() => handleChecked(index)}
-                      ></Checkbox>
+                        checked={item.selected}
+                        onClick={() => handleNewCheck(item)}
+                      ></GreenCheckbox>
                       <div className="w-[200px] ml-6 flex flex-col justify-center items-start">
                         <p className="font-ubuntu text-blue-900 font-bold">
                           {item.label}
@@ -127,9 +191,15 @@ const PageThree = () => {
                         </p>
                       </div>
                       <div className="ml-12 flex justify-end items-center">
-                        <p className="text-sm text-blue-700" id="price">
-                          {item.price}
-                        </p>
+                        {selectedTypes.switchState === false ? (
+                          <p className="text-sm text-blue-700" id="price">
+                            +${item.price}/mo
+                          </p>
+                        ) : (
+                          <p className="text-sm text-blue-700" id="price">
+                            +${item.price}/yr
+                          </p>
+                        )}
                       </div>
                     </MenuItem>
                   </div>
@@ -138,10 +208,17 @@ const PageThree = () => {
               {/* <div className="mt-3 flex justify-start items-center gap-2 lg:gap-3"></div> */}
 
               <div className="hidden md:flex mt-6 justify-between items-center py-6">
-                <button className="text-zinc-400 font-ubuntu font-semibold cursor-pointer w-[120px] h-12 bg-zinc-50 rounded-lg">
+                <button
+                  className="text-zinc-400 font-ubuntu font-semibold cursor-pointer w-[120px] h-12 bg-zinc-50 rounded-lg"
+                  onClick={handleBack}
+                >
+                  {" "}
                   Go Back
                 </button>
-                <button className="bg-blue-900 text-white font-ubuntu w-[120px] h-12 flex justify-center items-center rounded-lg cursor-pointer">
+                <button
+                  className="bg-blue-900 text-white font-ubuntu w-[120px] h-12 flex justify-center items-center rounded-lg cursor-pointer"
+                  onClick={handleNext}
+                >
                   Next Step
                 </button>
               </div>
@@ -149,10 +226,16 @@ const PageThree = () => {
           </div>
         </div>
         <div className="flex justify-between items-center p-4 md:hidden">
-          <button className="text-zinc-400 font-ubuntu font-semibold cursor-pointer w-[120px] h-12 bg-zinc-50 rounded-lg">
+          <button
+            className="text-zinc-400 font-ubuntu font-semibold cursor-pointer w-[120px] h-12 bg-zinc-50 rounded-lg"
+            onClick={handleBack}
+          >
             Go Back
           </button>
-          <button className="bg-blue-900 text-white font-ubuntu w-[120px] h-12 flex justify-center items-center rounded-lg cursor-pointer">
+          <button
+            className="bg-blue-900 text-white font-ubuntu w-[120px] h-12 flex justify-center items-center rounded-lg cursor-pointer"
+            onClick={handleNext}
+          >
             Next Step
           </button>
         </div>

@@ -1,4 +1,6 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrent, setPrice } from "./../redux/slices/inputSlice";
 
 const menuItems = [
   {
@@ -16,6 +18,26 @@ const menuItems = [
 ];
 
 const PageFour = () => {
+  const { selectedAddOns, price, selectedTypes, selectedPlan, focusedIndex } =
+    useSelector((state) => state.input);
+  const dispatch = useDispatch();
+  console.log("selectedAddOns", selectedAddOns[0]);
+  console.log(
+    "selectedPlans",
+
+    selectedPlan.map((i, v) => {
+      if (i.id === focusedIndex) {
+        console.log(i);
+      } else {
+        return;
+      }
+    })
+  );
+
+  console.log("focused Index", focusedIndex);
+
+  console.log("sector ", price);
+
   return (
     <div>
       <div className="relative w-full h-[530px] flex justify-center items-center bg-blue-100 md:bg-white md:h-full">
@@ -33,32 +55,84 @@ const PageFour = () => {
                 <div className="flex justify-between items-center border-b-[1px] border-zinc-300">
                   <div className="flex flex-col">
                     <h2 className="text-blue-900 font-ubuntu font-semibold">
-                      Arcade (Monthly)
+                      {selectedPlan?.map((item) => {
+                        if (item.id === focusedIndex) {
+                          return item.name;
+                        } else return;
+                      })}
+                      &nbsp;(Monthly)
                     </h2>
-                    <p className="text-zinc-400 underline font-ubuntu cursor-pointer mb-4">
+                    <p
+                      className="text-zinc-400 underline font-ubuntu cursor-pointer mb-4"
+                      onClick={() => dispatch(setCurrent(1))}
+                    >
                       Change
                     </p>
                   </div>
-                  <p className="text-blue-900 font-bold font-ubuntu">$9/mo</p>
+
+                  {selectedPlan?.map((item) => {
+                    if (
+                      item.id === focusedIndex &&
+                      selectedTypes.switchState === true
+                    ) {
+                      return (
+                        <p className="text-blue-900 font-bold font-ubuntu">
+                          ${item.price}/yr
+                        </p>
+                      );
+                    } else if (
+                      item.id === focusedIndex &&
+                      selectedTypes.switchState === false
+                    ) {
+                      return (
+                        <p className="text-blue-900 font-bold font-ubuntu">
+                          ${item.price}/mo
+                        </p>
+                      );
+                    }
+                  })}
                 </div>
                 <div className="flex flex-col justify-start items-start mt-4 gap-2">
-                  {menuItems.map((item, i) => (
-                    <div key={i} className="flex justify-between items-center">
-                      <p className="w-[210px] text-zinc-400 font-ubuntu">
-                        {item.label}
-                      </p>
-                      <p className="text-blue-900 font-bold font-ubuntu">
-                        {item.price}
-                      </p>
-                    </div>
-                  ))}
+                  {selectedAddOns[0]?.map(
+                    (item, i) =>
+                      item.selected === true && (
+                        <div
+                          key={i}
+                          className="flex justify-between items-center"
+                        >
+                          <p className="w-[210px] text-zinc-400 font-ubuntu">
+                            {item.label}
+                          </p>
+                          {selectedTypes.switchState === true ? (
+                            <p className="text-blue-900 font-bold font-ubuntu">
+                              +${item.price * 10}/yr
+                            </p>
+                          ) : (
+                            <p className="text-blue-900 font-bold font-ubuntu">
+                              +${item.price}/mo
+                            </p>
+                          )}
+                        </div>
+                      )
+                  )}
                 </div>
               </div>
               <div className="mt-4 w-[280px] flex justify-between items-center p-4">
-                <p className="text-zinc-400 font-ubuntu">Total (per month)</p>
-                <p className="text-textColor font-bold font-ubuntu text-lg">
-                  $12/mo
+                <p className="text-zinc-400 font-ubuntu">
+                  Total{" "}
+                  {selectedTypes.switchState === true
+                    ? "(per year )"
+                    : "(per month)"}
                 </p>
+                {selectedTypes.switchState === true ? (
+                  <p className="text-textColor font-bold font-ubuntu text-lg">
+                    ${price}/yr
+                  </p>
+                ) : (
+                  <p className="text-textColor font-bold font-ubuntu text-lg">
+                    ${price}/mo
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -75,39 +149,98 @@ const PageFour = () => {
               <div className="flex justify-between items-center border-b-[1px] border-zinc-300">
                 <div className="flex flex-col">
                   <h2 className="text-blue-900 font-ubuntu font-semibold">
-                    Arcade (Monthly)
+                    {selectedPlan?.map((item) => {
+                      if (item.id === focusedIndex) {
+                        return item.name;
+                      } else return;
+                    })}
+                    &nbsp;(Monthly)
                   </h2>
-                  <p className="text-zinc-400 underline font-ubuntu cursor-pointer mb-4">
+                  <p
+                    className="text-zinc-400 underline font-ubuntu cursor-pointer mb-4"
+                    onClick={() => dispatch(setCurrent(1))}
+                  >
                     Change
                   </p>
                 </div>
-                <p className="text-blue-900 font-bold font-ubuntu">$9/mo</p>
+                {selectedPlan?.map((item) => {
+                  if (
+                    item.id === focusedIndex &&
+                    selectedTypes.switchState === true
+                  ) {
+                    return (
+                      <p className="text-blue-900 font-bold font-ubuntu">
+                        ${item.price}/yr
+                      </p>
+                    );
+                  } else if (
+                    item.id === focusedIndex &&
+                    selectedTypes.switchState === false
+                  ) {
+                    return (
+                      <p className="text-blue-900 font-bold font-ubuntu">
+                        ${item.price}/mo
+                      </p>
+                    );
+                  }
+                })}
               </div>
               <div className="flex flex-col justify-start items-start mt-4 gap-2">
-                {menuItems.map((item, i) => (
-                  <div key={i} className="flex justify-between items-center">
-                    <p className="w-[310px] lg:w-[360px] text-zinc-400 font-ubuntu">
-                      {item.label}
-                    </p>
-                    <p className="text-blue-900 font-bold font-ubuntu">
-                      {item.price}
-                    </p>
-                  </div>
-                ))}
+                {selectedAddOns[0]?.map(
+                  (item, i) =>
+                    item.selected === true && (
+                      <div
+                        key={i}
+                        className="flex justify-between items-center"
+                      >
+                        <p className="w-[310px] lg:w-[360px] text-zinc-400 font-ubuntu">
+                          {item.label}
+                        </p>
+                        {selectedTypes.switchState === true ? (
+                          <p className="text-blue-900 font-bold font-ubuntu">
+                            +${item.price * 10}/yr
+                          </p>
+                        ) : (
+                          <p className="text-blue-900 font-bold font-ubuntu">
+                            +${item.price}/mo
+                          </p>
+                        )}
+                      </div>
+                    )
+                )}
               </div>
             </div>
             <div className="mt-4 w-[380px] lg:w-[450px] flex justify-between items-center p-4">
-              <p className="text-zinc-400 font-ubuntu">Total (per month)</p>
+              <p className="text-zinc-400 font-ubuntu">
+                Total{" "}
+                {selectedTypes.switchState === true
+                  ? "(per year )"
+                  : "(per month)"}
+              </p>
               <p className="text-textColor font-bold font-ubuntu text-xl">
-                $12/mo
+                {selectedTypes.switchState === true ? (
+                  <p className="text-textColor font-bold font-ubuntu text-lg">
+                    ${price}/yr
+                  </p>
+                ) : (
+                  <p className="text-textColor font-bold font-ubuntu text-lg">
+                    ${price}/mo
+                  </p>
+                )}
               </p>
             </div>
 
             <div className="hidden md:flex mt-10 justify-between items-center py-6">
-              <button className="text-zinc-400 font-ubuntu font-semibold cursor-pointer w-[120px] h-12 bg-zinc-50 rounded-lg">
+              <button
+                className="text-zinc-400 font-ubuntu font-semibold cursor-pointer w-[120px] h-12 bg-zinc-50 rounded-lg"
+                onClick={() => dispatch(setCurrent(2))}
+              >
                 Go Back
               </button>
-              <button className="bg-textColor text-white font-ubuntu w-[120px] h-12 flex justify-center items-center rounded-lg cursor-pointer">
+              <button
+                className="bg-textColor text-white font-ubuntu w-[120px] h-12 flex justify-center items-center rounded-lg cursor-pointer"
+                onClick={() => dispatch(setCurrent(4))}
+              >
                 Confirm
               </button>
             </div>
@@ -115,10 +248,16 @@ const PageFour = () => {
         </div>
       </div>
       <div className="flex justify-between items-center p-4 md:hidden">
-        <button className="text-zinc-400 font-ubuntu font-semibold cursor-pointer w-[120px] h-12 bg-zinc-50 rounded-lg">
+        <button
+          className="text-zinc-400 font-ubuntu font-semibold cursor-pointer w-[120px] h-12 bg-zinc-50 rounded-lg"
+          onClick={() => dispatch(setCurrent(2))}
+        >
           Go Back
         </button>
-        <button className="bg-textColor text-white font-ubuntu w-[120px] h-12 flex justify-center items-center rounded-lg cursor-pointer">
+        <button
+          className="bg-textColor text-white font-ubuntu w-[120px] h-12 flex justify-center items-center rounded-lg cursor-pointer"
+          onClick={() => dispatch(setCurrent(4))}
+        >
           Confirm
         </button>
       </div>
