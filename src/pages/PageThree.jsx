@@ -1,5 +1,6 @@
 import { Checkbox, MenuItem } from "@mui/material";
-import { withStyles } from "@mui/styles";
+import { checkboxClasses } from "@mui/material/Checkbox";
+// import { withStyles } from "@mui-core/core/styles";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -9,15 +10,15 @@ import {
   setHandleCheck,
 } from "../redux/slices/inputSlice";
 
-const GreenCheckbox = withStyles({
-  root: {
-    color: "grey",
-    "&$checked": {
-      color: "blue",
-    },
-  },
-  checked: {},
-})((props) => <Checkbox color="default" {...props} />);
+// const GreenCheckbox = withStyles({
+// root: {
+// color: "grey",
+// "&$checked": {
+// color: "blue",
+// },
+// },
+// checked: {},
+// })((props) => <Checkbox color="default" {...props} />);
 const menuI = [
   {
     selected: false,
@@ -118,11 +119,19 @@ const PageThree = () => {
                         value={item.name}
                         // selected={item.price === value}
                       >
-                        <GreenCheckbox
+                        <Checkbox
+                          sx={{
+                            root: {
+                              color: "grey",
+                              [`&, &.${checkboxClasses.checked}`]: {
+                                color: "blue",
+                              },
+                            },
+                          }}
                           key={index}
                           checked={item.selected}
                           onClick={() => handleNewCheck(item)}
-                        ></GreenCheckbox>
+                        ></Checkbox>
                         <div className="w-[155px] flex flex-col justify-center items-start">
                           <p className="font-ubuntu text-blue-900 font-bold">
                             {item.label}
@@ -177,11 +186,19 @@ const PageThree = () => {
                       // value={item.price}
                       // selected={item.price === value}
                     >
-                      <GreenCheckbox
+                      <Checkbox
+                        sx={{
+                          root: {
+                            color: "grey",
+                            [`&, &.${checkboxClasses.checked}`]: {
+                              color: "blue",
+                            },
+                          },
+                        }}
                         key={index}
                         checked={item.selected}
                         onClick={() => handleNewCheck(item)}
-                      ></GreenCheckbox>
+                      ></Checkbox>
                       <div className="w-[200px] ml-6 flex flex-col justify-center items-start">
                         <p className="font-ubuntu text-blue-900 font-bold">
                           {item.label}
