@@ -42,20 +42,20 @@ React js, Tailwind, Vite, Redux/Redux toolkit
 ## Getting Started
 
 - [STEP 1]
-  clone the project from github
-  in the command line of your system, run the following command
-  git clone https://github.com/Hunchojoe19/multiStep.git
+- clone the project from github
+- in the command line of your system, run the following command
+- git clone https://github.com/Hunchojoe19/multiStep.git
 - [STEP 2]
-  Navigate to the project directory
-  cd multiStep and open the folder using any code editor of your choice
+- Navigate to the project directory
+- cd multiStep and open the folder using any code editor of your choice
 - [STEP 3]
-  Install Dependencies
-  Run the following command to install the project dependencies
-  npm install
+- Install Dependencies
+- Run the following command to install the project dependencies
+- npm install
 - [STEP 4]
-  Run the Development Server
-  Run the following command to start the development server
-  npm start
+- Run the Development Server
+- Run the following command to start the development server
+- npm start
 
 ## Contributing
 
