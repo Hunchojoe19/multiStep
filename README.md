@@ -62,7 +62,7 @@ React js, Tailwind, Vite, Redux/Redux toolkit
 
 - Run the Development Server
 - Run the following command to start the development server
-- npm start
+- npm run dev
 
 ## Contributing
 
