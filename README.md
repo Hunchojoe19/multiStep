@@ -29,11 +29,11 @@ This project offers a reusable solution for implementing multi-step input forms 
 
 ## Features
 
-- 1.Step-by-Step Interface: Guides users through the input process with clear step indicators.
-- 2.Redux-Powered State Management: Utilizes Redux for efficient state management, ensuring data integrity and consistency across steps.
-- 3.Validation Support: Includes validation mechanisms to ensure data integrity and accuracy before submission.
-- 4.Error Handling: Provides robust error handling capabilities to notify users of any issues during the input process.
-- 5.Responsive Design: Responsive layout ensures compatibility across various devices and screen sizes.
+- Step-by-Step Interface: Guides users through the input process with clear step indicators.
+- Redux-Powered State Management: Utilizes Redux for efficient state management, ensuring data integrity and consistency across steps.
+- Validation Support: Includes validation mechanisms to ensure data integrity and accuracy before submission.
+- Error Handling: Provides robust error handling capabilities to notify users of any issues during the input process.
+- Responsive Design: Responsive layout ensures compatibility across various devices and screen sizes.
 
 ## Technologies
 
@@ -41,18 +41,19 @@ React js, Tailwind, Vite, Redux/Redux toolkit
 
 ## Getting Started
 
-- [STEP 1]
+[STEP 1]
+
 - clone the project from github
 - in the command line of your system, run the following command
 - git clone https://github.com/Hunchojoe19/multiStep.git
-- [STEP 2]
+  [STEP 2]
 - Navigate to the project directory
 - cd multiStep and open the folder using any code editor of your choice
-- [STEP 3]
+  [STEP 3]
 - Install Dependencies
 - Run the following command to install the project dependencies
 - npm install
-- [STEP 4]
+  [STEP 4]
 - Run the Development Server
 - Run the following command to start the development server
 - npm start
