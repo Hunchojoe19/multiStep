@@ -29,11 +29,11 @@ This project offers a reusable solution for implementing multi-step input forms 
 
 ## Features
 
-1.Step-by-Step Interface: Guides users through the input process with clear step indicators.
-2.Redux-Powered State Management: Utilizes Redux for efficient state management, ensuring data integrity and consistency across steps.
-4.Validation Support: Includes validation mechanisms to ensure data integrity and accuracy before submission.
-5.Error Handling: Provides robust error handling capabilities to notify users of any issues during the input process.
-6.Responsive Design: Responsive layout ensures compatibility across various devices and screen sizes.
+- 1.Step-by-Step Interface: Guides users through the input process with clear step indicators.
+- 2.Redux-Powered State Management: Utilizes Redux for efficient state management, ensuring data integrity and consistency across steps.
+- 3.Validation Support: Includes validation mechanisms to ensure data integrity and accuracy before submission.
+- 4.Error Handling: Provides robust error handling capabilities to notify users of any issues during the input process.
+- 5.Responsive Design: Responsive layout ensures compatibility across various devices and screen sizes.
 
 ## Technologies
 
