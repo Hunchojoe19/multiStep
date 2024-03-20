@@ -28,7 +28,7 @@ const Stepper = ({ active, setActive }) => {
             className={`h-8 w-8 border rounded-full flex items-center justify-center ${
               current === index && active ? "bg-blue-200" : "bg-transparent"
             }`}
-            onClick={() => handleClick(index)}
+            
           >
             <h1
               className={`${
@@ -48,7 +48,7 @@ const Stepper = ({ active, setActive }) => {
                 className={`h-12 w-12 border rounded-full cursor-pointer flex items-center justify-center ${
                   current === index && active ? "bg-blue-200" : "bg-transparent"
                 }`}
-                onClick={() => handleClick(index)}
+               
               >
                 <h1
                   className={`${
